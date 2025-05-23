@@ -358,9 +358,9 @@
         background-size: 15px 15px;
       }
       .card-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(140px, 1fr));
         gap: 1rem;
-        padding: 0.5rem;
+        padding: 0.75rem;
       }
       .main-nav {
         flex-wrap: wrap;
@@ -393,21 +393,18 @@
         margin: 0 auto;
       }
       .flip-card {
-        height: 130px;
-        margin-bottom: 1rem;
-      }
-      .flip-card-inner {
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 120px;
+        margin-bottom: 0.5rem;
       }
       .flip-card-front h3 {
-        font-size: 0.95rem;
+        font-size: 0.85rem;
       }
       .flip-card-back p {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
       }
       .tech-tag {
-        font-size: 0.65rem;
-        padding: 0.1rem 0.4rem;
+        font-size: 0.6rem;
+        padding: 0.1rem 0.3rem;
       }
     }
     @media (max-width: 480px) {
@@ -424,8 +421,13 @@
         font-size: 0.9rem;
         padding: 0.3rem 0.6rem;
       }
+      .card-grid {
+        grid-template-columns: minmax(120px, 1fr);
+        gap: 0.75rem;
+        padding: 0.5rem;
+      }
       .flip-card {
-        height: 120px;
+        height: 110px;
       }
       .flip-card-front h3 {
         font-size: 0.9rem;
@@ -807,6 +809,13 @@
       const isTouchDevice = 'ontouchstart' in window;
       let touchStartTime;
       let touchStartY;
+      let currentlyFlipped = null;
+      
+      function unflipAll() {
+        cards.forEach(card => {
+          card.classList.remove('flipped');
+        });
+      }
       
       if (isTouchDevice) {
         cards.forEach(card => {
@@ -821,11 +830,30 @@
             const touchDuration = touchEndTime - touchStartTime;
             const touchDistance = Math.abs(touchEndY - touchStartY);
             
-            // Only flip if it's a short tap (less than 200ms) and minimal vertical movement
             if (touchDuration < 200 && touchDistance < 10) {
               e.preventDefault();
-              this.classList.toggle('flipped');
+              if (currentlyFlipped === this) {
+                this.classList.remove('flipped');
+                currentlyFlipped = null;
+              } else {
+                unflipAll();
+                this.classList.add('flipped');
+                currentlyFlipped = this;
+              }
             }
+          });
+        });
+      } else {
+        cards.forEach(card => {
+          card.addEventListener('mouseenter', function() {
+            unflipAll();
+            this.classList.add('flipped');
+            currentlyFlipped = this;
+          });
+          
+          card.addEventListener('mouseleave', function() {
+            this.classList.remove('flipped');
+            currentlyFlipped = null;
           });
         });
       }
