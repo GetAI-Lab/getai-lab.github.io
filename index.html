@@ -133,6 +133,8 @@
       position: relative;
       z-index: 1;
       transform-style: preserve-3d;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .flip-card:hover {
       z-index: 2;
@@ -147,8 +149,11 @@
       box-shadow: 0 8px 16px rgba(0,0,0,0.1);
       border-radius: 12px;
       will-change: transform;
+      -webkit-transform-style: preserve-3d;
     }
-    .flip-card:hover .flip-card-inner {
+    .flip-card:hover .flip-card-inner,
+    .flip-card:focus .flip-card-inner,
+    .flip-card:active .flip-card-inner {
       transform: rotateY(180deg);
     }
     .flip-card-front, .flip-card-back {
@@ -165,6 +170,7 @@
       overflow: hidden;
       box-sizing: border-box;
       transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
     }
     .flip-card-front {
       background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
@@ -379,6 +385,22 @@
       .about-img {
         margin: 0 auto;
       }
+      .flip-card {
+        height: 130px;
+      }
+      .flip-card-inner {
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .flip-card-front h3 {
+        font-size: 0.95rem;
+      }
+      .flip-card-back p {
+        font-size: 0.8rem;
+      }
+      .tech-tag {
+        font-size: 0.65rem;
+        padding: 0.1rem 0.4rem;
+      }
     }
     @media (max-width: 480px) {
       body::before {
@@ -393,6 +415,15 @@
       .main-nav a {
         font-size: 0.9rem;
         padding: 0.3rem 0.6rem;
+      }
+      .flip-card {
+        height: 120px;
+      }
+      .flip-card-front h3 {
+        font-size: 0.9rem;
+      }
+      .flip-card-back p {
+        font-size: 0.75rem;
       }
     }
     @media (max-width: 1024px) {
@@ -616,6 +647,17 @@
         <h3 style="color: #1f2937; margin-top: 0; margin-bottom: 1.5rem; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem;">Research Team</h3>
         
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+         <div>
+            <h4 style="color: #2563eb; margin-bottom: 1rem;">Graduate Research Assistant</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+                <span style="position: absolute; left: 0; color: #2563eb;">•</span>
+                Buhimila Golani Mboja
+                <div style="color: #4b5563; font-size: 0.9rem;">Environmental Science Department</div>
+              </li>
+            </ul>
+          </div>
+
           <div>
             <h4 style="color: #2563eb; margin-bottom: 1rem;">Undergraduate Research Assistants</h4>
             <ul style="list-style: none; padding: 0; margin: 0;">
@@ -632,17 +674,6 @@
             </ul>
           </div>
           
-          <div>
-            <h4 style="color: #2563eb; margin-bottom: 1rem;">Graduate Research Assistant</h4>
-            <ul style="list-style: none; padding: 0; margin: 0;">
-              <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                <span style="position: absolute; left: 0; color: #2563eb;">•</span>
-                Buhimila Golani Mboja
-                <div style="color: #4b5563; font-size: 0.9rem;">Environmental Science Department</div>
-              </li>
-            </ul>
-          </div>
-        </div>
       </div>
     </section>
 
