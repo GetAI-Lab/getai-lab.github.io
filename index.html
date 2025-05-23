@@ -134,7 +134,7 @@
       z-index: 1;
       transform-style: preserve-3d;
       -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
+      touch-action: pan-y;
     }
     .flip-card-inner {
       position: relative;
@@ -394,6 +394,7 @@
       }
       .flip-card {
         height: 130px;
+        margin-bottom: 1rem;
       }
       .flip-card-inner {
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -804,12 +805,27 @@
     document.addEventListener('DOMContentLoaded', function() {
       const cards = document.querySelectorAll('.flip-card');
       const isTouchDevice = 'ontouchstart' in window;
+      let touchStartTime;
+      let touchStartY;
       
       if (isTouchDevice) {
         cards.forEach(card => {
           card.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            this.classList.toggle('flipped');
+            touchStartTime = Date.now();
+            touchStartY = e.touches[0].clientY;
+          });
+          
+          card.addEventListener('touchend', function(e) {
+            const touchEndTime = Date.now();
+            const touchEndY = e.changedTouches[0].clientY;
+            const touchDuration = touchEndTime - touchStartTime;
+            const touchDistance = Math.abs(touchEndY - touchStartY);
+            
+            // Only flip if it's a short tap (less than 200ms) and minimal vertical movement
+            if (touchDuration < 200 && touchDistance < 10) {
+              e.preventDefault();
+              this.classList.toggle('flipped');
+            }
           });
         });
       }
