@@ -136,9 +136,6 @@
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
     }
-    .flip-card:hover {
-      z-index: 2;
-    }
     .flip-card-inner {
       position: relative;
       width: 100%;
@@ -151,9 +148,8 @@
       will-change: transform;
       -webkit-transform-style: preserve-3d;
     }
-    .flip-card:hover .flip-card-inner,
-    .flip-card:focus .flip-card-inner,
-    .flip-card:active .flip-card-inner {
+    .flip-card.flipped .flip-card-inner,
+    .flip-card:hover .flip-card-inner {
       transform: rotateY(180deg);
     }
     .flip-card-front, .flip-card-back {
@@ -803,6 +799,22 @@
   <footer>
     <p>© 2025 GetAI Lab</p>
   </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const cards = document.querySelectorAll('.flip-card');
+      const isTouchDevice = 'ontouchstart' in window;
+      
+      if (isTouchDevice) {
+        cards.forEach(card => {
+          card.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            this.classList.toggle('flipped');
+          });
+        });
+      }
+    });
+  </script>
 </body>
 </html>
 
