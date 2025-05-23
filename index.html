@@ -19,6 +19,7 @@
       background-color: #f8fafc;
       position: relative;
       overflow-x: hidden;
+      min-height: 100vh;
     }
     body::before {
       content: '';
@@ -34,6 +35,8 @@
       pointer-events: none;
       z-index: -1;
       animation: scrollBackground 20s linear infinite;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
     }
     @keyframes scrollBackground {
       0% {
@@ -93,9 +96,13 @@
       transform: translateY(-1px);
     }
     .container {
-      padding: 2rem;
       position: relative;
       z-index: 1;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+      box-sizing: border-box;
     }
     section {
       padding: 2rem 0;
@@ -335,14 +342,57 @@
       position: absolute;
       left: 0;
     }
-    @media (max-width: 700px) {
+    @media (max-width: 768px) {
+      .container {
+        padding: 0.5rem;
+      }
+      body::before {
+        background-size: 15px 15px;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0.5rem;
+      }
+      .main-nav {
+        flex-wrap: wrap;
+        padding: 0.5rem;
+      }
+      .main-nav a {
+        margin: 0.25rem;
+        font-size: 1rem;
+        padding: 0.4rem 0.8rem;
+      }
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      section {
+        padding: 1rem 0;
+      }
       .about-row {
         flex-direction: column;
         gap: 1rem;
-        align-items: flex-start;
       }
       .about-img {
-        justify-content: flex-start;
+        margin: 0 auto;
+      }
+    }
+    @media (max-width: 480px) {
+      body::before {
+        background-size: 12px 12px;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .container {
+        padding: 0.25rem;
+      }
+      .main-nav a {
+        font-size: 0.9rem;
+        padding: 0.3rem 0.6rem;
       }
     }
     @media (max-width: 1024px) {
@@ -713,3 +763,4 @@
   </footer>
 </body>
 </html>
+
